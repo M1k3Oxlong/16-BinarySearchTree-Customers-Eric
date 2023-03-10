@@ -88,8 +88,8 @@ public class MainController {
      * @return Das Ergebnis der Traversierung als Zeichenkette.
      */
     private String traverse(BinarySearchTree tree){
-        //TODO 04:  Siehe Rückgabe. You can do it!
-        return "Lege fest, wie die Daten ausgegeben werden sollen!";
+        //  TODO 04:  Siehe Rückgabe. You can do it!
+        return tree.getContent().toString() + traverse(tree.getLeftTree()) + traverse(tree.getRightTree());
     }
 
     /**
@@ -100,7 +100,10 @@ public class MainController {
     public String[] searchLastName(){
         //TODO 05: Umsetzung einer Teilaufgabe einer zurückliegenden Hausaufgabe.
         String[] output = new String[2];
-
+        BinarySearchTree<Customer> tree = customerTree;
+        while (!tree.getRightTree().isEmpty())tree = tree.getRightTree();
+        output[0] = tree.getContent().getName();
+        output[1] = tree.getContent().getSales() + "";
         return output;
     }
 
@@ -110,7 +113,11 @@ public class MainController {
      */
     public int sumUpSales(){
         //TODO 06:  Ein weiterer Algorithmus, der mit einer Traversierung einfach umsetzbar ist.
-        return -1;
+        return sumUpSalesRec(customerTree);
+    }
+    private int sumUpSalesRec(BinarySearchTree<Customer> tree){
+        if (tree.isEmpty()) return 0;
+        return tree.getContent().getSales() + sumUpSalesRec(tree.getLeftTree()) + sumUpSalesRec(tree.getRightTree());
     }
 
     /**
