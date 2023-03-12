@@ -128,6 +128,11 @@ public class MainController {
      */
     public boolean insert(String name, int sales){
         //TODO 07:  Erste Methode, die auf der Datenstruktur selbst konkret arbeitet und einige Methoden von ihr aufruft.
+        Customer help = new Customer(name, sales);
+        if (customerTree.search(help) != null){
+            customerTree.insert(help);
+            return true;
+        }
         return false;
     }
 
