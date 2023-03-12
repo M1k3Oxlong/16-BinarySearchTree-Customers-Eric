@@ -144,6 +144,11 @@ public class MainController {
      */
     public boolean delete(String name){
         //TODO 08: Methode funktioniert so ähnlich wie die vorherige.
+        Customer help = new Customer(name, 0);
+        if (customerTree.search(help)!= null){
+            customerTree.remove(help);
+            return true;
+        }
         return false;
     }
 
