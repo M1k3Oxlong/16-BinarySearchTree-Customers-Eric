@@ -89,7 +89,10 @@ public class MainController {
      */
     private String traverse(BinarySearchTree tree){
         //  TODO 04:  Siehe Rückgabe. You can do it!
-        return tree.getContent().toString() + traverse(tree.getLeftTree()) + traverse(tree.getRightTree());
+        if(!tree.isEmpty()){
+            return tree.getContent().toString() + ", " + traverse(tree.getLeftTree()) + traverse(tree.getRightTree());
+        }
+        return "";
     }
 
     /**
@@ -99,12 +102,23 @@ public class MainController {
      */
     public String[] searchLastName(){
         //TODO 05: Umsetzung einer Teilaufgabe einer zurückliegenden Hausaufgabe.
-        String[] output = new String[2];
+        /*String[] output = new String[2];
         BinarySearchTree<Customer> tree = customerTree;
-        while (!tree.getRightTree().isEmpty())tree = tree.getRightTree();
+
+        while(!tree.getRightTree().isEmpty()){
+            tree = tree.getRightTree();
+        }
         output[0] = tree.getContent().getName();
         output[1] = tree.getContent().getSales() + "";
-        return output;
+
+        return output;*/
+
+        return searchLastName(customerTree);
+    }
+
+    public String[] searchLastName(BinarySearchTree<Customer> tree){
+        if(!tree.getRightTree().isEmpty()) return searchLastName(tree.getRightTree());
+        else return new String[]{tree.getContent().getName(), tree.getContent().getSales() + ""};
     }
 
     /**
@@ -116,7 +130,7 @@ public class MainController {
         return sumUpSalesRec(customerTree);
     }
     private int sumUpSalesRec(BinarySearchTree<Customer> tree){
-        if (tree.isEmpty()) return 0;
+        if(tree.isEmpty()) return 0;
         return tree.getContent().getSales() + sumUpSalesRec(tree.getLeftTree()) + sumUpSalesRec(tree.getRightTree());
     }
 
@@ -128,9 +142,10 @@ public class MainController {
      */
     public boolean insert(String name, int sales){
         //TODO 07:  Erste Methode, die auf der Datenstruktur selbst konkret arbeitet und einige Methoden von ihr aufruft.
-        Customer help = new Customer(name, sales);
-        if (customerTree.search(help) != null){
-            customerTree.insert(help);
+        Customer tmp = new Customer(name, sales);
+
+        if (customerTree.search(tmp) == null){
+            customerTree.insert(tmp);
             return true;
         }
         return false;
@@ -144,11 +159,7 @@ public class MainController {
      */
     public boolean delete(String name){
         //TODO 08: Methode funktioniert so ähnlich wie die vorherige.
-        Customer help = new Customer(name, 0);
-        if (customerTree.search(help)!= null){
-            customerTree.remove(help);
-            return true;
-        }
+
         return false;
     }
 

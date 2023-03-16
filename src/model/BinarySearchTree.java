@@ -92,31 +92,13 @@ public class BinarySearchTree<ContentType extends ComparableContent<ContentType>
 	 */
 	public void insert(ContentType pContent) {
 		//TODO 01: Implementiere den Algorithmus zum Einfügen eines neuen Objekts.
-		//insertRecursive(pContent, node);
 		if (pContent != null){
-			if (isEmpty()) this.node = new BSTNode<>(pContent);
-			else if (pContent.isGreater(node.content))this.getRightTree().insert(pContent);
-			else if (pContent.isLess(node.content)) this.getLeftTree().insert(pContent);
+			if (isEmpty()) node = new BSTNode<>(pContent);
+			else if (pContent.isGreater(node.content)) getRightTree().insert(pContent);
+			else if (pContent.isLess(node.content)) getLeftTree().insert(pContent);
 		}
 	}
 
-	private void insertRecursive(ContentType pContent, BSTNode<ContentType> pNode){
-		if (pContent != null && !pContent.isEqual(pNode.content)){
-			if (pContent.isLess(pNode.content)){
-				if (pNode.left.isEmpty()){
-					pNode.left.node = new BSTNode<>(pContent);
-				} else {
-					insertRecursive(pContent, pNode.left.node);
-				}
-			} else {
-				if (pNode.right.isEmpty()){
-					pNode.right.node = new BSTNode<>(pContent);
-				} else {
-					insertRecursive(pContent, pNode.right.node);
-				}
-			}
-		}
-	}
 
 	/**
 	 * Diese Anfrage liefert den linken Teilbaum des binaeren Suchbaumes. <br />
@@ -229,9 +211,10 @@ public class BinarySearchTree<ContentType extends ComparableContent<ContentType>
 	public ContentType search(ContentType pContent) {
 		//TODO 03: Implementiere den Algorithmus zum Suchen eines Objekts.
 		if (pContent == null || isEmpty()) return null;
-		if (this.node.content.equals(pContent)) return this.node.content;
-		if (pContent.isLess(this.node.content))return this.getLeftTree().search(pContent);
-		return this.getRightTree().search(pContent);
+		if(node.content.isEqual(pContent)) return node.content;
+		if(node.content.isGreater(pContent)) return getLeftTree().search(pContent);
+		if(node.content.isGreater(pContent)) return getRightTree().search(pContent);
+		return null;
 	}
 
 	/* ----------- Weitere private Methoden -------------- */
